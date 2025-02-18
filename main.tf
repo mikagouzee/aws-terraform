@@ -11,6 +11,16 @@ resource "aws_vpc" "main" {
   enable_dns_hostnames = true
 }
 
+# APPEL DU MODULE 
+module "vpc" {
+  source = "./modules/vpc"
+  cidr_block = "10.0.0.0/16"
+  dns_hostnames = true
+  aws_subnet_names = ["ControlNode_subnet", "MachineTest_subnet"]
+  cidr_blocks = ["10.0.1.0/24", "10.0.2.0/24"]
+}
+
+
 resource "aws_internet_gateway" "gw" {
   vpc_id = aws_vpc.main.id
 
